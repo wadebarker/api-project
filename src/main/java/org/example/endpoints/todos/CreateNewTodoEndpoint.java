@@ -1,0 +1,28 @@
+package org.example.endpoints.todos;
+
+import io.restassured.response.Response;
+import io.restassured.RestAssured;
+import static io.restassured.RestAssured.given;
+
+public class CreateNewTodoEndpoint {
+
+    private static final String CREATE_TODO = "/api/todos/create";
+
+    public static Response createTodo(String title, String description, String date, String time, boolean checked) {
+        String body = String.format("""
+                {
+                  "title": "%s",
+                  "description": "%s",
+                  "date": "%s",
+                  "time": "%s",
+                  "checked": %s
+                }
+                """, title, description, date, time, checked);
+
+        return given()
+                .spec(RestAssured.requestSpecification)
+                    .body(body)
+                .when()
+                    .post(CREATE_TODO);
+    }
+}

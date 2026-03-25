@@ -1,4 +1,4 @@
-name: Java API Automation with Allure Pages
+name: Java API Automation Project
 
 on:
   push:

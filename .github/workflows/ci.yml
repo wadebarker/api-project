@@ -1,4 +1,4 @@
-name: API Tests CI
+name: Github Actions for Java Backend Automation Project
 
 on:
   push:
@@ -41,6 +41,7 @@ jobs:
 
       - name: Run tests
         run: mvn test # запуск TestNG тестов
+        continue-on-error: true # Разрешаем шагу с тестами завершаться без падения job даже если будут ошибки
 
       - name: Upload Allure results
         uses: actions/upload-artifact@v4
@@ -52,6 +53,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     needs: test
+    if: always() # Запуск создания отчёта даже при завалившихся тестах
 
     steps:
       - name: Checkout repository

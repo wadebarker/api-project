@@ -1,4 +1,4 @@
-name: Github Actions for Java Backend Automation Project
+name: Github Actions for Java API Automation Project
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Java API Automation Project
+name: Java Backend Automation Project
 
 on:
   push:
@@ -70,11 +70,15 @@ jobs:
       - name: Generate Allure report
         run: mvn allure:report -Dallure.results.directory=allure-results -Dallure.report.directory=allure-report
 
-      - name: Upload Allure report as artifact
+      - name: Zip Allure report
+        run: |
+          zip -r allure-report.zip allure-report
+
+      - name: Upload Allure report artifact
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
+          name: allure-report-zip
+          path: allure-report.zip
 
 
   deploy:
@@ -89,11 +93,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Allure report
+      - name: Download Allure report artifact
         uses: actions/download-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
+          name: allure-report-zip
+          path: allure-report.zip
+
+      - name: Unzip Allure report
+        run: unzip -o allure-report.zip -d allure-report
 
       # Проверяем, существует ли ветка gh-pages, если нет — создаём пустую ветку
       - name: Ensure gh-pages branch exists
@@ -121,5 +128,5 @@ jobs:
 
       - name: Print GitHub Pages URL
         run: |
-          echo "Отчёт доступен по ссылке:"
+          echo "Отчёт доступе по ссылке:"
           echo "https://${USER_NAME}.github.io/${REPO_NAME}/"

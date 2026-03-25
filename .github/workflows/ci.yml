@@ -1,4 +1,4 @@
-name: Java API Automation Project - Allure Report CI/CD
+name: Java API Automation Project
 
 on:
   push:
@@ -11,9 +11,6 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - name: Force Node.js 24
-        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -33,9 +30,6 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - name: Force Node.js 24
-        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -64,9 +58,6 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
-      - name: Force Node.js 24
-        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -79,14 +70,11 @@ jobs:
       - name: Generate Allure report
         run: mvn allure:report -Dallure.results.directory=allure-results -Dallure.report.directory=allure-report
 
-      - name: Zip Allure report
-        run: zip -r allure-report.zip allure-report
-
-      - name: Upload Allure report artifact
+      - name: Upload Allure report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report-zip
-          path: allure-report.zip
+          name: allure-report
+          path: allure-report
 
 
   deploy:
@@ -98,34 +86,40 @@ jobs:
       REPO_NAME: ${{ github.repository }}
       USER_NAME: ${{ github.actor }}
     steps:
-      - name: Force Node.js 24
-        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Allure report artifact
+      - name: Download Allure report
         uses: actions/download-artifact@v4
         with:
-          name: allure-report-zip
-          path: allure-report.zip
+          name: allure-report
+          path: allure-report
 
-      - name: Unzip Allure report
-        run: unzip -o allure-report.zip -d allure-report
+      # Проверяем, существует ли ветка gh-pages, если нет — создаём пустую ветку
+      - name: Ensure gh-pages branch exists
+        run: |
+          if ! git ls-remote --exit-code origin gh-pages; then
+            echo "Branch gh-pages does not exist. Creating..."
+            git checkout --orphan gh-pages
+            git rm -rf .
+            git commit --allow-empty -m "Initial gh-pages commit"
+            git push origin gh-pages
+            git checkout main
+          else
+            echo "Branch gh-pages exists."
+          fi
 
       - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report/
+          publish_dir: allure-report
           publish_branch: gh-pages
-          force_orphan: false
+          force_orphan: true
           user_name: github-actions
           user_email: github-actions@github.com
-          enable_jekyll: false  # отключаем Jekyll, чтобы корректно открывались все файлы
 
-      - name: Show GitHub Pages URL
+      - name: Print GitHub Pages URL
         run: |
-          URL="https://${USER_NAME}.github.io/${REPO_NAME}/"
-          echo "📌 Your Allure report is published at: $URL"
-          echo "::notice title=Allure Report::Your Allure report is available [here]($URL)"
+          echo "Отчёт доступен по ссылке:"
+          echo "https://${USER_NAME}.github.io/${REPO_NAME}/"

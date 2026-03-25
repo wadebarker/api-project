@@ -1,4 +1,4 @@
-name: Java API Automation Project
+name: Java API Automation Project - Allure Report CI/CD
 
 on:
   push:
@@ -22,6 +22,7 @@ jobs:
 
       - name: Build project
         run: mvn clean compile
+
 
   test:
     runs-on: ubuntu-latest
@@ -48,6 +49,7 @@ jobs:
         with:
           name: allure-results
           path: allure-results
+
 
   report:
     runs-on: ubuntu-latest
@@ -76,6 +78,7 @@ jobs:
         with:
           name: allure-report-zip
           path: allure-report.zip
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -110,20 +113,21 @@ jobs:
             git checkout main
           else
             echo "Branch gh-pages exists."
-          fi
 
+      # Публикуем содержимое allure-report как корень ветки gh-pages
       - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
+          publish_dir: allure-report/
           publish_branch: gh-pages
           force_orphan: true
           user_name: github-actions
           user_email: github-actions@github.com
 
-      - name: Show GitHub Pages URL as annotation
+      # Вывод ссылки как аннотации и в логах
+      - name: Show GitHub Pages URL
         run: |
           URL="https://${USER_NAME}.github.io/${REPO_NAME}/"
-          echo "Отчёт доступен по ссылке: $URL"
+          echo "📌 Your Allure report is published at: $URL"
           echo "::notice title=Allure Report::Your Allure report is available [here]($URL)"

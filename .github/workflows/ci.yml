@@ -88,29 +88,8 @@ jobs:
           name: allure-report
           path: allure-report
 
-      # Проверяем, существует ли ветка gh-pages, если нет — создаём пустую ветку
-      - name: Ensure gh-pages branch exists
-        run: |
-          if ! git ls-remote --exit-code origin gh-pages; then
-            echo "Branch gh-pages does not exist. Creating..."
-            git checkout --orphan gh-pages
-            git rm -rf .
-            git commit --allow-empty -m "Initial gh-pages commit"
-            git push origin gh-pages
-            git checkout main
-          else
-            echo "Branch gh-pages exists."
-          fi
-
       - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
-          publish_branch: gh-pages
-          force_orphan: true
-          user_name: github-actions
-          user_email: github-actions@github.com
 
       - name: Print GitHub Pages URL
         run: |

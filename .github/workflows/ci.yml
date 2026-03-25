@@ -1,4 +1,4 @@
-name: Java API Automation Project with Allure Pages Link
+name: Java API Automation Project
 
 on:
   push:
@@ -83,7 +83,6 @@ jobs:
     if: always()
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-      # Задаём имя репозитория для генерации ссылки
       REPO_NAME: ${{ github.repository }}
       USER_NAME: ${{ github.actor }}
     steps:
@@ -95,6 +94,20 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+
+      # Проверяем, существует ли ветка gh-pages, если нет — создаём пустую ветку
+      - name: Ensure gh-pages branch exists
+        run: |
+          if ! git ls-remote --exit-code origin gh-pages; then
+            echo "Branch gh-pages does not exist. Creating..."
+            git checkout --orphan gh-pages
+            git rm -rf .
+            git commit --allow-empty -m "Initial gh-pages commit"
+            git push origin gh-pages
+            git checkout main
+          else
+            echo "Branch gh-pages exists."
+          fi
 
       - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -108,5 +121,5 @@ jobs:
 
       - name: Print GitHub Pages URL
         run: |
-          echo "Allure отчёт доступен по ссылке:"
+          echo "Отчёт доступен по ссылке:"
           echo "https://${USER_NAME}.github.io/${REPO_NAME}/"

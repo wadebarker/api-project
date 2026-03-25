@@ -11,6 +11,9 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
+      - name: Force Node.js 24
+        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -30,6 +33,9 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
+      - name: Force Node.js 24
+        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -58,6 +64,9 @@ jobs:
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
+      - name: Force Node.js 24
+        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -89,6 +98,9 @@ jobs:
       REPO_NAME: ${{ github.repository }}
       USER_NAME: ${{ github.actor }}
     steps:
+      - name: Force Node.js 24
+        run: echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -101,7 +113,6 @@ jobs:
       - name: Unzip Allure report
         run: unzip -o allure-report.zip -d allure-report
 
-      # Проверяем, существует ли ветка gh-pages, если нет — создаём пустую ветку
       - name: Ensure gh-pages branch exists
         run: |
           if ! git ls-remote --exit-code origin gh-pages; then
@@ -114,7 +125,6 @@ jobs:
           else
             echo "Branch gh-pages exists."
 
-      # Публикуем содержимое allure-report как корень ветки gh-pages
       - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -125,7 +135,6 @@ jobs:
           user_name: github-actions
           user_email: github-actions@github.com
 
-      # Вывод ссылки как аннотации и в логах
       - name: Show GitHub Pages URL
         run: |
           URL="https://${USER_NAME}.github.io/${REPO_NAME}/"

@@ -14,7 +14,7 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: "temurin"
           java-version: 18
 
       - name: Build
@@ -30,7 +30,7 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: "temurin"
           java-version: 18
 
       - name: Run tests
@@ -83,8 +83,12 @@ jobs:
           name: allure-report
           path: allure-report
 
-      - name: Deploy report to GitHub Pages
+      - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
+          publish_branch: gh-pages
+          force_orphan: true       # создаёт новую ветку без истории
+          user_name: github-actions
+          user_email: github-actions@github.com

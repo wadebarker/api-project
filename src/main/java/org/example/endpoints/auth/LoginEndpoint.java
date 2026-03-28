@@ -1,11 +1,11 @@
-package org.example.endpoints.login;
+package org.example.endpoints.auth;
 
 import io.qameta.allure.Step;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import io.restassured.http.ContentType;
-import org.example.models.login.LoginRequest;
+import org.example.models.auth.LoginRequest;
 
 import static io.restassured.RestAssured.given;
 

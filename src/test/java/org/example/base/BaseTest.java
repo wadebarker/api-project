@@ -2,13 +2,13 @@ package org.example.base;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.example.config.Credentials;
-import org.example.endpoints.login.history.LoginEndpoint;
 import org.example.config.ApiConfig;
+import org.example.config.AppPropertiesReader;
+import org.example.endpoints.auth.LoginEndpoint;
+import org.example.models.auth.LoginRequest;
 import org.testng.annotations.BeforeClass;
 
 import static io.restassured.RestAssured.given;
-
 
 public abstract class BaseTest {
 
@@ -18,15 +18,16 @@ public abstract class BaseTest {
 
         // Авторизация
         Response response = LoginEndpoint.login(
-                Credentials.EMAIL,
-                Credentials.PASSWORD
+                new LoginRequest(
+                        AppPropertiesReader.get("email"),
+                        AppPropertiesReader.get("password")
+                )
         );
 
-
-        // Получаем токена
+        // Получаем токен
         String accessToken = response.jsonPath().getString("accessToken");
 
-        // Создаём глобальный requestSpecification
+        // Глобальный requestSpecification
         RestAssured.requestSpecification = given()
                 .contentType("application/json")
                 .header("Authorization", "Bearer " + accessToken);

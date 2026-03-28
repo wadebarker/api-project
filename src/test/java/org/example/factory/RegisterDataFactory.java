@@ -1,7 +1,7 @@
 package org.example.factory;
 
 import net.datafaker.Faker;
-import org.example.models.register.RegisterRequest;
+import org.example.models.auth.RegisterRequest;
 
 // factory (генерация данных)
 public class RegisterDataFactory {

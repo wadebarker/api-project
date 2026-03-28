@@ -1,11 +1,11 @@
-package org.example.endpoints.register;
+package org.example.endpoints.auth;
 
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.qameta.allure.Allure;
 import io.restassured.response.Response;
 import io.restassured.http.ContentType;
-import org.example.models.register.RegisterRequest;
+import org.example.models.auth.RegisterRequest;
 
 import static io.restassured.RestAssured.given;
 

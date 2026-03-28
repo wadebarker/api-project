@@ -1,8 +1,8 @@
 package org.example.factory;
 
 import net.datafaker.Faker;
-import org.example.config.Credentials;
-import org.example.models.login.LoginRequest;
+import org.example.models.auth.LoginRequest;
+import org.example.config.AppPropertiesReader;
 
 // factory (генерация данных)
 public class LoginDataFactory {
@@ -11,14 +11,14 @@ public class LoginDataFactory {
 
     public static LoginRequest validUser() {
         return new LoginRequest(
-                Credentials.EMAIL,
-                Credentials.PASSWORD
+                AppPropertiesReader.get("email"),
+                AppPropertiesReader.get("password")
         );
     }
 
     public static LoginRequest wrongPassword() {
         return new LoginRequest(
-                Credentials.EMAIL,
+                AppPropertiesReader.get("email"),
                 faker.internet().password(8, 12)
         );
     }
@@ -26,7 +26,7 @@ public class LoginDataFactory {
     public static LoginRequest randomEmail() {
         return new LoginRequest(
                 faker.internet().emailAddress(),
-                Credentials.PASSWORD
+                AppPropertiesReader.get("password")
         );
     }
 
@@ -39,7 +39,7 @@ public class LoginDataFactory {
 
     public static LoginRequest emptyPassword() {
         return new LoginRequest(
-                Credentials.EMAIL,
+                AppPropertiesReader.get("email"),
                 ""
         );
     }

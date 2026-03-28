@@ -1,6 +1,5 @@
-package org.example.models.login;
+package org.example.models.auth;
 
-// DTO (Data Transfer Object) — классы для request и response.
 public class LoginRequest {
 
     private String email;

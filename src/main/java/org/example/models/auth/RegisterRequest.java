@@ -1,6 +1,5 @@
-package org.example.models.register;
+package org.example.models.auth;
 
-// DTO (Data Transfer Object)
 public class RegisterRequest {
 
     private String email;

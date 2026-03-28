@@ -1,11 +1,11 @@
-package org.example.tests.auth.register;
+package org.example.tests.unit.auth;
 
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.example.base.BaseTest;
 import org.example.dataproviders.RegisterDataProvider;
-import org.example.endpoints.register.RegisterEndpoint;
-import org.example.models.register.RegisterRequest;
+import org.example.endpoints.auth.RegisterEndpoint;
+import org.example.models.auth.RegisterRequest;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

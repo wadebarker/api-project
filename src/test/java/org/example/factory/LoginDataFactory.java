@@ -7,6 +7,8 @@ import org.example.config.AppPropertiesReader;
 // factory (генерация данных)
 public class LoginDataFactory {
 
+    public static final int CREDENTIALS_MIN_LENGTH = 6;
+    public static final int CREDENTIALS_MAX_LENGTH = 50;
     private static final Faker faker = new Faker();
 
     public static LoginRequest validUser() {
@@ -19,7 +21,7 @@ public class LoginDataFactory {
     public static LoginRequest wrongPassword() {
         return new LoginRequest(
                 AppPropertiesReader.get("email"),
-                faker.internet().password(8, 12)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
@@ -33,7 +35,7 @@ public class LoginDataFactory {
     public static LoginRequest emptyEmail() {
         return new LoginRequest(
                 "",
-                faker.internet().password(8, 12)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 

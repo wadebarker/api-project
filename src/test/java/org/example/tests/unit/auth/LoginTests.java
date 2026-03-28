@@ -26,10 +26,10 @@ public class LoginTests extends BaseTest {
             attachResponse(response);
 
             Allure.step("Verify response status code is 200", () ->
-                assertThat(response.statusCode(), equalTo(200))
+                    assertThat(response.statusCode(), equalTo(200))
             );
 
-            Allure.step("Verify response body", () -> {
+            Allure.step("Verify auth response body", () -> {
                 AuthAssertions.verifyTokens(response);
                 AuthAssertions.verifyUserId(response);
                 AuthAssertions.verifyUserEmail(response, request.getEmail());

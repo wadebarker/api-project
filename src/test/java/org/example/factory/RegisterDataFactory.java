@@ -7,6 +7,8 @@ import org.example.models.auth.RegisterRequest;
 // factory (генерация данных)
 public class RegisterDataFactory {
 
+    public static final int CREDENTIALS_MIN_LENGTH = 6;
+    public static final int CREDENTIALS_MAX_LENGTH = 50;
     private static final Faker faker = new Faker();
 
     private static String uniqueEmail() {
@@ -16,21 +18,21 @@ public class RegisterDataFactory {
     public static RegisterRequest validUser() {
         return new RegisterRequest(
                 uniqueEmail(),
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest emailMinLength() {
         return new RegisterRequest(
                 "b@b.ru",
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest passwordMinLength() {
         return new RegisterRequest(
                 uniqueEmail(),
-                "123456"
+                faker.lorem().characters(CREDENTIALS_MIN_LENGTH)
         );
     }
 
@@ -38,28 +40,28 @@ public class RegisterDataFactory {
         String email = faker.lorem().characters(40) + "@mail.com";
         return new RegisterRequest(
                 email,
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest passwordMaxLength() {
         return new RegisterRequest(
                 uniqueEmail(),
-                faker.lorem().characters(50)
+                faker.lorem().characters(CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest shortEmail() {
         return new RegisterRequest(
                 "a@b.c",
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest shortPassword() {
         return new RegisterRequest(
                 uniqueEmail(),
-                "12345"
+                faker.lorem().characters(CREDENTIALS_MIN_LENGTH - 1)
         );
     }
 
@@ -67,21 +69,21 @@ public class RegisterDataFactory {
         String email = faker.lorem().characters(42) + "@mail.com";
         return new RegisterRequest(
                 email,
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest longPassword() {
         return new RegisterRequest(
                 uniqueEmail(),
-                faker.lorem().characters(51)
+                faker.lorem().characters(CREDENTIALS_MAX_LENGTH + 1)
         );
     }
 
     public static RegisterRequest emptyEmail() {
         return new RegisterRequest(
                 "",
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
@@ -95,14 +97,14 @@ public class RegisterDataFactory {
     public static RegisterRequest emailWithoutAt() {
         return new RegisterRequest(
                 "invalidemail.com",
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest duplicateEmail() {
         return new RegisterRequest(
                 AppPropertiesReader.get("email"),
-                faker.internet().password(6, 50)
+                faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 }

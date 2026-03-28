@@ -13,23 +13,20 @@ public class RegisterDataFactory {
         return faker.internet().emailAddress();
     }
 
-    // ✅ VALID USER
     public static RegisterRequest validUser() {
         return new RegisterRequest(
                 uniqueEmail(),
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 
-    // ✅ EMAIL = 6 characters
     public static RegisterRequest emailMinLength() {
         return new RegisterRequest(
                 "b@b.ru",
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 
-    // ✅ PASSWORD = 6 characters
     public static RegisterRequest passwordMinLength() {
         return new RegisterRequest(
                 uniqueEmail(),
@@ -37,16 +34,14 @@ public class RegisterDataFactory {
         );
     }
 
-    // ✅ EMAIL = 50 characters
     public static RegisterRequest emailMaxLength() {
         String email = faker.lorem().characters(40) + "@mail.com";
         return new RegisterRequest(
                 email,
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 
-    // ✅ PASSWORD = 50 characters
     public static RegisterRequest passwordMaxLength() {
         return new RegisterRequest(
                 uniqueEmail(),
@@ -54,15 +49,13 @@ public class RegisterDataFactory {
         );
     }
 
-    // ❌ EMAIL < 6
     public static RegisterRequest shortEmail() {
         return new RegisterRequest(
                 "a@b.c",
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 
-    // ❌ PASSWORD < 6
     public static RegisterRequest shortPassword() {
         return new RegisterRequest(
                 uniqueEmail(),
@@ -70,16 +63,14 @@ public class RegisterDataFactory {
         );
     }
 
-    // ❌ EMAIL > 50
     public static RegisterRequest longEmail() {
         String email = faker.lorem().characters(42) + "@mail.com";
         return new RegisterRequest(
                 email,
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 
-    // ❌ PASSWORD > 50
     public static RegisterRequest longPassword() {
         return new RegisterRequest(
                 uniqueEmail(),
@@ -87,15 +78,13 @@ public class RegisterDataFactory {
         );
     }
 
-    // ❌ EMPTY EMAIL
     public static RegisterRequest emptyEmail() {
         return new RegisterRequest(
                 "",
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 
-    // ❌ EMPTY PASSWORD
     public static RegisterRequest emptyPassword() {
         return new RegisterRequest(
                 uniqueEmail(),
@@ -103,19 +92,17 @@ public class RegisterDataFactory {
         );
     }
 
-    // ❌ EMAIL WITHOUT @
     public static RegisterRequest emailWithoutAt() {
         return new RegisterRequest(
                 "invalidemail.com",
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 
-    // ❌ DUPLICATE EMAIL
     public static RegisterRequest duplicateEmail() {
         return new RegisterRequest(
                 AppPropertiesReader.get("email"),
-                faker.internet().password(6, 20)
+                faker.internet().password(6, 50)
         );
     }
 }

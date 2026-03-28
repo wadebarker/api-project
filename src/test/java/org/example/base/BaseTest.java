@@ -16,7 +16,6 @@ public abstract class BaseTest {
     public void setup() {
         ApiConfig.setup();
 
-        // Авторизация
         Response response = LoginEndpoint.login(
                 new LoginRequest(
                         AppPropertiesReader.get("email"),
@@ -24,10 +23,8 @@ public abstract class BaseTest {
                 )
         );
 
-        // Получаем токен
         String accessToken = response.jsonPath().getString("accessToken");
 
-        // Глобальный requestSpecification
         RestAssured.requestSpecification = given()
                 .contentType("application/json")
                 .header("Authorization", "Bearer " + accessToken);

@@ -19,9 +19,7 @@ import static org.hamcrest.Matchers.*;
 
 1) Сгенерировать нового пользователя
 2) Вызвать register
-3) Проверить 201
 4) С теми же данными вызвать login
-5) Проверить 200 и токены
 */
 
 @Epic("User Authentication Module")
@@ -33,7 +31,6 @@ public class AuthFlowTest extends BaseTest {
     @Story("User can register and then login")
     public void registerAndLoginFlow() {
 
-        // 1️⃣ Создаём валидного пользователя через фабрику
         RegisterRequest registerRequest = RegisterDataFactory.validUser();
 
         Allure.step("Register new user", () -> {
@@ -43,6 +40,12 @@ public class AuthFlowTest extends BaseTest {
             Allure.step("Verify register status code", () ->
                     assertThat(registerResponse.statusCode(), equalTo(201))
             );
+
+            Allure.step("Verify response body", () -> {
+                AuthAssertions.verifyTokens(registerResponse);
+                AuthAssertions.verifyUserId(registerResponse);
+                AuthAssertions.verifyUserEmail(registerResponse, registerRequest.getEmail());
+            });
         });
 
         LoginRequest loginRequest = new LoginRequest(

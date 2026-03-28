@@ -11,8 +11,6 @@ import org.example.models.auth.LoginRequest;
 import org.example.models.auth.RegisterRequest;
 import org.testng.annotations.Test;
 
-import java.util.UUID;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 

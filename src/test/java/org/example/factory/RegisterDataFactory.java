@@ -1,6 +1,7 @@
 package org.example.factory;
 
 import net.datafaker.Faker;
+import org.example.config.AppPropertiesReader;
 import org.example.models.auth.RegisterRequest;
 
 // factory (генерация данных)
@@ -111,9 +112,9 @@ public class RegisterDataFactory {
     }
 
     // ❌ DUPLICATE EMAIL
-    public static RegisterRequest duplicateEmail(String email) {
+    public static RegisterRequest duplicateEmail() {
         return new RegisterRequest(
-                email,
+                AppPropertiesReader.get("email"),
                 faker.internet().password(6, 20)
         );
     }

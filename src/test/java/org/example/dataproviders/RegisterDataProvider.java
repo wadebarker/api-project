@@ -25,7 +25,8 @@ public class RegisterDataProvider {
                 {RegisterDataFactory.longPassword()},
                 {RegisterDataFactory.emptyEmail()},
                 {RegisterDataFactory.emptyPassword()},
-                {RegisterDataFactory.emailWithoutAt()}
+                {RegisterDataFactory.emailWithoutAt()},
+                {RegisterDataFactory.duplicateEmail()}
         };
     }
 }

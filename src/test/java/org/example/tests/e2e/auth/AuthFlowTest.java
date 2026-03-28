@@ -6,6 +6,7 @@ import org.example.assertions.auth.AuthAssertions;
 import org.example.base.BaseTest;
 import org.example.endpoints.auth.LoginEndpoint;
 import org.example.endpoints.auth.RegisterEndpoint;
+import org.example.factory.RegisterDataFactory;
 import org.example.models.auth.LoginRequest;
 import org.example.models.auth.RegisterRequest;
 import org.testng.annotations.Test;
@@ -34,11 +35,8 @@ public class AuthFlowTest extends BaseTest {
     @Story("User can register and then login")
     public void registerAndLoginFlow() {
 
-        // генерируем уникального пользователя
-        String email = "test_" + UUID.randomUUID() + "@mail.com";
-        String password = "Qwerty123";
-
-        RegisterRequest registerRequest = new RegisterRequest(email, password);
+        // 1️⃣ Создаём валидного пользователя через фабрику
+        RegisterRequest registerRequest = RegisterDataFactory.validUser();
 
         Allure.step("Register new user", () -> {
 
@@ -49,7 +47,10 @@ public class AuthFlowTest extends BaseTest {
             );
         });
 
-        LoginRequest loginRequest = new LoginRequest(email, password);
+        LoginRequest loginRequest = new LoginRequest(
+                registerRequest.getEmail(),
+                registerRequest.getPassword()
+        );
 
         Allure.step("Login with registered user", () -> {
 
@@ -59,9 +60,11 @@ public class AuthFlowTest extends BaseTest {
                     assertThat(loginResponse.statusCode(), equalTo(200))
             );
 
-            AuthAssertions.verifyTokens(loginResponse);
-            AuthAssertions.verifyUserId(loginResponse);
-            AuthAssertions.verifyUserEmail(loginResponse, loginRequest.getEmail());
+            Allure.step("Verify response body", () -> {
+                AuthAssertions.verifyTokens(loginResponse);
+                AuthAssertions.verifyUserId(loginResponse);
+                AuthAssertions.verifyUserEmail(loginResponse, loginRequest.getEmail());
+            });
         });
     }
 }

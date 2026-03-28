@@ -1,4 +1,4 @@
-package org.example.tests.integration.auth;
+package org.example.tests.unit.auth;
 
 import io.qameta.allure.*;
 import io.restassured.response.Response;
@@ -26,16 +26,14 @@ public class LoginTests extends BaseTest {
             attachResponse(response);
 
             Allure.step("Verify response status code is 200", () ->
-                    assertThat(response.statusCode(), equalTo(200))
+                assertThat(response.statusCode(), equalTo(200))
             );
 
-            Allure.step("Verify access token", () ->
-                    assertThat(response.jsonPath().getString("accessToken"), notNullValue())
-            );
-
-            AuthAssertions.verifyTokens(response);
-            AuthAssertions.verifyUserId(response);
-            AuthAssertions.verifyUserEmail(response, request.getEmail());
+            Allure.step("Verify response body", () -> {
+                AuthAssertions.verifyTokens(response);
+                AuthAssertions.verifyUserId(response);
+                AuthAssertions.verifyUserEmail(response, request.getEmail());
+            });
         });
     }
 

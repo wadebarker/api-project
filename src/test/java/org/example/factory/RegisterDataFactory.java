@@ -9,7 +9,7 @@ public class RegisterDataFactory {
     private static final Faker faker = new Faker();
 
     private static String uniqueEmail() {
-        return faker.internet().emailAddress() + System.currentTimeMillis();
+        return faker.internet().emailAddress();
     }
 
     // ✅ VALID USER

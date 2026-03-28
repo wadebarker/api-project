@@ -1,7 +1,8 @@
-package org.example.tests.unit.auth;
+package org.example.tests.integration.auth;
 
 import io.qameta.allure.*;
 import io.restassured.response.Response;
+import org.example.assertions.auth.AuthAssertions;
 import org.example.base.BaseTest;
 import org.example.dataproviders.RegisterDataProvider;
 import org.example.endpoints.auth.RegisterEndpoint;
@@ -10,6 +11,7 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @Severity(SeverityLevel.BLOCKER)
 @Epic("User Authentication Module")
@@ -25,6 +27,10 @@ public class RegisterTests extends BaseTest {
             Allure.step("Verify response status code is 201", () ->
                     assertThat(response.statusCode(), equalTo(201))
             );
+
+            AuthAssertions.verifyTokens(response);
+            AuthAssertions.verifyUserId(response);
+            AuthAssertions.verifyUserEmail(response, request.getEmail());
         });
     }
 

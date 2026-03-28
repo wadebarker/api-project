@@ -1,7 +1,8 @@
-package org.example.tests.unit.auth;
+package org.example.tests.integration.auth;
 
 import io.qameta.allure.*;
 import io.restassured.response.Response;
+import org.example.assertions.auth.AuthAssertions;
 import org.example.base.BaseTest;
 import org.example.dataproviders.LoginDataProvider;
 import org.example.endpoints.auth.LoginEndpoint;
@@ -32,17 +33,9 @@ public class LoginTests extends BaseTest {
                     assertThat(response.jsonPath().getString("accessToken"), notNullValue())
             );
 
-            Allure.step("Verify refresh token", () ->
-                    assertThat(response.jsonPath().getString("refreshToken"), notNullValue())
-            );
-
-            Allure.step("Verify user id", () ->
-                    assertThat(response.jsonPath().getString("user.id"), notNullValue())
-            );
-
-            Allure.step("Verify user email", () ->
-                    assertThat(response.jsonPath().getString("user.email"), equalTo(request.getEmail()))
-            );
+            AuthAssertions.verifyTokens(response);
+            AuthAssertions.verifyUserId(response);
+            AuthAssertions.verifyUserEmail(response, request.getEmail());
         });
     }
 

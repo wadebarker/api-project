@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.*;
 @Severity(SeverityLevel.BLOCKER)
 @Epic("User Authentication Module")
 @Feature("Login Functionality")
+@Test(groups = "unit")
 public class LoginTests extends BaseTest {
 
     @Test(dataProvider = "positiveLogin", dataProviderClass = LoginDataProvider.class)

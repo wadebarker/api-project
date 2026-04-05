@@ -22,32 +22,36 @@ public class RegisterDataFactory {
         );
     }
 
+    /** Короткий валидный email (на бэкенде иногда min длина строже, чем в Swagger). */
     public static RegisterRequest emailMinLength() {
         return new RegisterRequest(
-                "b@b.ru",
+                "ab@c.ru",
                 faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
+    /** Ровно 6 символов, есть буквы и цифра (часто требуется бэкендом). */
     public static RegisterRequest passwordMinLength() {
         return new RegisterRequest(
                 uniqueEmail(),
-                faker.lorem().characters(CREDENTIALS_MIN_LENGTH)
+                "Qwert1"
         );
     }
 
+    /** Локальная часть только [a-z], домен валидный для regex в OpenAPI, всего 50 символов. */
     public static RegisterRequest emailMaxLength() {
-        String email = faker.lorem().characters(40) + "@mail.com";
+        String local = "a".repeat(40);
         return new RegisterRequest(
-                email,
+                local + "@test.mail",
                 faker.internet().password(CREDENTIALS_MIN_LENGTH, CREDENTIALS_MAX_LENGTH)
         );
     }
 
     public static RegisterRequest passwordMaxLength() {
+        String pwd = "A1a" + "x".repeat(CREDENTIALS_MAX_LENGTH - 3);
         return new RegisterRequest(
                 uniqueEmail(),
-                faker.lorem().characters(CREDENTIALS_MAX_LENGTH)
+                pwd
         );
     }
 

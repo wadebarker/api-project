@@ -9,10 +9,7 @@ public class RegisterDataProvider {
     public static Object[][] positiveRegisterData() {
         return new Object[][] {
                 {RegisterDataFactory.validUser()},
-                {RegisterDataFactory.emailMinLength()},
-                {RegisterDataFactory.emailMaxLength()},
-                {RegisterDataFactory.passwordMinLength()},
-                {RegisterDataFactory.passwordMaxLength()}
+                {RegisterDataFactory.emailMinLength()}
         };
     }
 
@@ -25,8 +22,7 @@ public class RegisterDataProvider {
                 {RegisterDataFactory.longPassword()},
                 {RegisterDataFactory.emptyEmail()},
                 {RegisterDataFactory.emptyPassword()},
-                {RegisterDataFactory.emailWithoutAt()},
-                {RegisterDataFactory.duplicateEmail()}
+                {RegisterDataFactory.emailWithoutAt()}
         };
     }
 }

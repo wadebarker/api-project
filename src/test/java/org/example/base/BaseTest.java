@@ -1,32 +1,20 @@
 package org.example.base;
 
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import org.example.config.ApiConfig;
-import org.example.config.AppPropertiesReader;
-import org.example.endpoints.auth.LoginEndpoint;
-import org.example.models.auth.LoginRequest;
 import org.testng.annotations.BeforeClass;
 
-import static io.restassured.RestAssured.given;
-
+/**
+ * Базовая подготовка окружения без авторизации.
+ * <p>
+ * {@code @BeforeClass} в TestNG вызывается один раз на класс (до всех {@code @Test} этого класса),
+ * а не перед каждым HTTP-запросом. Глобальный токен задаётся не здесь, а в {@link AuthenticatedBaseTest}.
+ */
 public abstract class BaseTest {
 
     @BeforeClass
-    public void setup() {
+    public void setupBase() {
         ApiConfig.setup();
-
-        Response response = LoginEndpoint.login(
-                new LoginRequest(
-                        AppPropertiesReader.get("email"),
-                        AppPropertiesReader.get("password")
-                )
-        );
-
-        String accessToken = response.jsonPath().getString("accessToken");
-
-        RestAssured.requestSpecification = given()
-                .contentType("application/json")
-                .header("Authorization", "Bearer " + accessToken);
+        RestAssured.requestSpecification = null;
     }
 }

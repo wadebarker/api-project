@@ -1,5 +1,8 @@
 package org.example.models.auth;
 
+/**
+ * Тело запросов login / register / update-email
+ */
 public class LoginRequest {
 
     private String email;

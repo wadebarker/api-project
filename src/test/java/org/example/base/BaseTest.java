@@ -5,10 +5,7 @@ import org.example.config.ApiConfig;
 import org.testng.annotations.BeforeClass;
 
 /**
- * Базовая подготовка окружения без авторизации.
- * <p>
- * {@code @BeforeClass} в TestNG вызывается один раз на класс (до всех {@code @Test} этого класса),
- * а не перед каждым HTTP-запросом. Глобальный токен задаётся не здесь, а в {@link AuthenticatedBaseTest}.
+ * Базовая подготовка окружения без авторизации
  */
 public abstract class BaseTest {
 

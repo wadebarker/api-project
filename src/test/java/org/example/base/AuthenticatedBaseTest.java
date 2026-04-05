@@ -10,8 +10,7 @@ import org.testng.annotations.BeforeClass;
 import static io.restassured.RestAssured.given;
 
 /**
- * Для тестов, где все сценарии идут с Bearer-токеном: один логин на класс и общая
- * {@link RestAssured#requestSpecification} для эндпоинтов, которые вызывают {@code .spec(...)}.
+ * Для тестов, где все сценарии идут с Bearer-токеном: один логин на класс
  */
 public abstract class AuthenticatedBaseTest extends BaseTest {
 

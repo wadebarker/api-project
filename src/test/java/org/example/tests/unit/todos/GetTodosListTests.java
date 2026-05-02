@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.*;
 @Epic("Todos API")
 @Feature("List tasks")
 @Severity(SeverityLevel.NORMAL)
-@Test(groups = "unit")
+@Test(groups = {"unit", "integration"})
 public class GetTodosListTests extends AuthenticatedBaseTest {
 
     private static final List<String> RES_TODO_DTO_KEYS = List.of(

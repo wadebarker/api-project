@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Интеграционные тесты todos-ручек (без загрузки файлов).
  */
-@Test(groups = "integration")
+@Test(groups = {"unit", "integration"})
 public class TodosApiIntegrationTest extends AuthenticatedBaseTest {
 
     @Test(dataProvider = "integrationCreateTodos", dataProviderClass = IntegrationTodoDataProvider.class)

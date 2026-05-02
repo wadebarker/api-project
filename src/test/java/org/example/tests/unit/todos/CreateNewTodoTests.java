@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.*;
 @Epic("Todos API")
 @Feature("Create task")
 @Severity(SeverityLevel.CRITICAL)
-@Test(groups = "unit")
+@Test(groups = {"unit", "integration"})
 public class CreateNewTodoTests extends AuthenticatedBaseTest {
 
     @Test(dataProvider = "validTodosForCreate", dataProviderClass = TodoUnitDataProvider.class)

@@ -37,4 +37,22 @@ public final class ProfileDataFactory {
                 AppPropertiesReader.get("profile.phone")
         );
     }
+
+    /** Имя короче minLength в OpenAPI (2). */
+    public static ProfileDto invalidNameTooShort() {
+        ProfileDto b = fromApplicationProperties();
+        return new ProfileDto("A", b.getDateOfBirth(), b.getSurname(), b.getPatronymic(), b.getSex(), b.getPhone());
+    }
+
+    /** Телефон не 18 символов (контракт OpenAPI). */
+    public static ProfileDto invalidPhoneLength() {
+        ProfileDto b = fromApplicationProperties();
+        return new ProfileDto(b.getName(), b.getDateOfBirth(), b.getSurname(), b.getPatronymic(), b.getSex(), "+7 (900) 000-00-0");
+    }
+
+    /** Фамилия короче minLength. */
+    public static ProfileDto invalidSurnameTooShort() {
+        ProfileDto b = fromApplicationProperties();
+        return new ProfileDto(b.getName(), b.getDateOfBirth(), "X", b.getPatronymic(), b.getSex(), b.getPhone());
+    }
 }

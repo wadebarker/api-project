@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.*;
 @Epic("User Authentication Module")
 @Feature("Register + Login Flow")
 @Severity(SeverityLevel.CRITICAL)
-@Test(groups = "integration")
+@Test(groups = {"integration", "e2e"})
 public class AuthFlowTest extends BaseTest {
 
     @Test

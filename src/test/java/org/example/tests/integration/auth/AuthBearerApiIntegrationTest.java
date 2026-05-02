@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Ручки с Bearer: refresh, update-email, update-pass, logout. Порядок {@code priority}: сначала сценарии с токеном, logout — последним.
  */
-@Test(groups = "integration")
+@Test(groups = {"unit", "integration"})
 public class AuthBearerApiIntegrationTest extends AuthenticatedBaseTest {
 
     @Test(priority = 1)

@@ -2,6 +2,7 @@ package org.example.endpoints.profile;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 
@@ -15,5 +16,17 @@ public class ProfileImageEndpoint {
                 .spec(RestAssured.requestSpecification)
                 .when()
                 .get(IMAGE);
+    }
+
+    public static Response getAvatarWithoutAuth() {
+        RequestSpecification previous = RestAssured.requestSpecification;
+        RestAssured.requestSpecification = null;
+        try {
+            return given()
+                    .when()
+                    .get(IMAGE);
+        } finally {
+            RestAssured.requestSpecification = previous;
+        }
     }
 }

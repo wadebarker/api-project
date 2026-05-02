@@ -1,12 +1,16 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--
+  Для Maven используйте: mvn test (Surefire сам находит *Test(s).java).
+  Этот suite — для запуска из IDE; при package-scan в некоторых связках Surefire+TestNG возможен 0 tests.
+-->
 <suite name="API Tests">
     <listeners>
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
 
-    <test name="Tests">
+    <test name="All tests">
         <packages>
-            <package name="tests"/>
+            <package name="org.example.tests"/>
         </packages>
     </test>
 </suite>

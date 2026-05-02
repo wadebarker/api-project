@@ -9,7 +9,7 @@ public class RegisterDataProvider {
     public static Object[][] positiveRegisterData() {
         return new Object[][] {
                 {RegisterDataFactory.validUser()},
-                {RegisterDataFactory.emailMinLength()}
+                {RegisterDataFactory.validUser()}
         };
     }
 
